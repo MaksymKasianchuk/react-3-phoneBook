@@ -2,7 +2,7 @@
   "name": "react-3-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://maksymkasianchuk.github.io/react-2-feedback",
+  "homepage": "http://maksymkasianchuk.github.io/react-3-phonebook",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",
