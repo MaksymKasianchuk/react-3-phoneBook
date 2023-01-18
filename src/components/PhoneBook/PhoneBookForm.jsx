@@ -1,44 +1,50 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Section from '../Section';
+import { nanoid } from 'nanoid';
+import { Formik, Form, Field } from 'formik';
 
-const PhoneBookForm = ({nameVal, numberval, handleChange, handleSubmit, className}) => {
+export const PhoneBookForm = ({ getValues }) => {
+
+    const nameId = nanoid(); 
+
+    const initVal = { 
+        name: ''
+    };
+
+    const handleSubmit = (values, actions) => {
+        getValues(values);
+        actions.resetForm();
+    };
+    
+    const validateForm = (values) => {
+        const errors = {};
+        if (!values.name) {
+            errors.name = 'Required';
+        } else if (!/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/i.test(values.name)) {
+            errors.name = 'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d\'Artagnan';
+        }
+        return errors;
+    };
+
     return (
-        <Section title="PhoneBook" classArr={['PhoneBookSection']}>
-            <form className={className} onSubmit={handleSubmit}>
-            <label htmlFor="name">Name</label>
-                <input
-                    value={nameVal}
-                    type="text"
-                    name="name"
-                    pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                    title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                    required
-                    onInput={handleChange}
-                />
-                <label htmlFor="number">Number</label>
-                <input
-                    value={numberval}
-                    type="tel"
-                    name="number"
-                    pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                    title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-                    required
-                    onInput={handleChange}
-                />
-                <button type="submit" className="PhoneBookForm__button">
-                    Save
-                </button>
-            </form>
-        </Section>
-    );
+        <Formik
+            initialValues={initVal}
+            validate={validateForm}
+            onSubmit={handleSubmit}
+        >
+        {({ errors, touched})=>(
+            <Form>
+                    <label htmlFor={nameId}>
+                        Name
+                        <Field type="text" id={nameId} name="name" placeholder="Enter Name" />
+                    </label>
+                    {errors.name && touched.name && errors.name}
+                    <button type="submit">Add contact</button>
+            </Form>
+        )}
+        </Formik>
+    )
 };
 
 PhoneBookForm.propTypes = {
-    nameVal: PropTypes.string.isRequired,
-    numberval: PropTypes.string.isRequired, 
-    handleChange: PropTypes.func.isRequired, 
-    handleSubmit: PropTypes.func.isRequired,
+    getValues: PropTypes.func.isRequired,
 };
-
-export default PhoneBookForm;

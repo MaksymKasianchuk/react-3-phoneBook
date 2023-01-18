@@ -1,14 +1,17 @@
-import React from 'react';
-import styles from './Section.module.scss';
+import PropTypes from 'prop-types';
+import { SectionStyled, SectionTitle } from './Section.styled';
 
-const Section = ({title, children, classArr}) => {
-    let classString = classArr ? [...classArr, styles.Section].join(" ") : styles.Section;
+const Section = ({title, children}) => {
     return(
-        <section className={classString}>
-            {title && (<h2>{title}</h2>)}
+        <SectionStyled>
+            {title && (<SectionTitle>{title}</SectionTitle>)} 
             {children}
-        </section>
-    );
-}
+        </SectionStyled>
+    )
+};
+
+Section.propTypes = {
+  title: PropTypes.string
+};
 
 export default Section;

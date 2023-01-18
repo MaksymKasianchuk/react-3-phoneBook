@@ -1,1 +1,2 @@
-export { default } from './PhoneBook';
+export  *  from './PhoneBookForm';
+export  *  from './PhoneBookList';
