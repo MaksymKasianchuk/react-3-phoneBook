@@ -13,6 +13,7 @@ export const theme = Object.freeze({
         dangerBg: '#fdb1b1'
     },
     radii: {
-        cardBorderRadius: '5'
+        cardBorderRadius: '10',
+        button: '5'
     }
 });  

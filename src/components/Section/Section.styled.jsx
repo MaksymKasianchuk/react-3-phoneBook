@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const SectionStyled = styled.section`
     padding: 40px 0;
-    margin: 80px auto;
+    margin: 40px auto;
     background:  ${props => props.theme.colors.cardBgColor};
     border-radius: ${props => props.theme.radii.cardBorderRadius}px;
     overflow: hidden;

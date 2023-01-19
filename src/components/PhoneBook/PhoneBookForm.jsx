@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import { nanoid } from 'nanoid';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Field } from 'formik';
+import { PhoneBookFormStyled, FormGroup, ErrorMessageStyled, FormButton } from './PhoneBook.styled';
 
 export const PhoneBookForm = ({ submitHandler }) => {
 
@@ -39,23 +40,23 @@ export const PhoneBookForm = ({ submitHandler }) => {
             validationSchema={schema}
             onSubmit={handleSubmit}
         >
-            <Form>
-                <div>
+            <PhoneBookFormStyled>
+                <FormGroup>
                     <label htmlFor={nameId}>
                         Name
                         <Field type="text" id={nameId} name="name" placeholder="Enter Name" />
                     </label>
-                    <ErrorMessage name="name" component='div'/>
-                </div>
-                <div>
+                    <ErrorMessageStyled name="name" component='div'/>
+                </FormGroup>
+                <FormGroup>
                     <label htmlFor={phoneId}>
                         Number
-                        <Field type="tel" id={phoneId} name="phone" placeholder="Enter phone humber" />
+                        <Field type="tel" id={phoneId} name="phone" placeholder="Enter phone number" />
                     </label>
-                    <ErrorMessage name="phone" component='div'/>
-                </div>
-                <button type="submit">Add contact</button>
-            </Form>
+                    <ErrorMessageStyled name="phone" component='div'/>
+                </FormGroup>
+                <FormButton type="submit">Add contact</FormButton>
+            </PhoneBookFormStyled>
         </Formik>
     )
 };
