@@ -5,18 +5,24 @@ import Section from 'components/Section';
 import Filter from 'components/Filter';
 import { PhoneBookForm, PhoneBookList } from 'components/PhoneBook';
 
-const INIT_CONTACTS = [
-  {id: 'id-1', name: 'Rosie Simpson', phone: '459-12-56'},
-  {id: 'id-2', name: 'Hermione Kline', phone: '443-89-12'},
-  {id: 'id-3', name: 'Eden Clements', phone: '645-17-79'},
-  {id: 'id-4', name: 'Annie Copeland', phone: '227-91-26'},
-];
+const LS_KEY = 'contacts';
 
 export default class App extends Component {
   state = {
-    contacts: INIT_CONTACTS,
+    contacts: [],
     filter: '',
   };
+
+  componentDidMount(){
+    const parsedSavedItems = JSON.parse(localStorage.getItem(LS_KEY));
+    if(parsedSavedItems) this.setState({contacts: parsedSavedItems});
+  };
+  
+  componentDidUpdate(_, prevState){
+    const stringifiedContacts = JSON.stringify(this.state.contacts);
+    if(prevState.contacts !== this.state.contacts) localStorage.setItem(LS_KEY, stringifiedContacts);
+  };
+
 
   handleFormSubmit = (values) => {
     const { name, phone } = values;
@@ -51,7 +57,6 @@ export default class App extends Component {
         contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }))
   };
-
   
   render() {
     const { contacts } = this.state;
